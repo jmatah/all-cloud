@@ -1,0 +1,20 @@
+#!/bin/bash
+sudo apt update -y
+sudo apt install -y httpd
+systemctl start httpd
+systemctl enable httpd
+sudo usermod -a -G apache ec2-user
+sudo chown -R ec2-user:apache /var/www
+sudo chmod 2775 /var/www
+find /var/www/html -type d -exec chmod 2775 {} \;
+find /var/www/html -type f -exec chmod 0664 {} \;
+echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
+echo "<h1>Hello World from India, I am $(hostname -f)</h1>" > /var/www/html/index.php
+
+
+Works:
+#!/bin/bash
+sudo apt-get update
+sudo apt-get install -y apache2
+sudo systemctl start apache2
+sudo systemctl enable apache2
